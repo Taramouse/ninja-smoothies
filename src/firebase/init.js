@@ -1,7 +1,7 @@
-import firebase from "firebase"
-import firestore from "firebase/firestore"
+import firebase from 'firebase/app';
+require('firebase/firestore')
 
-const firebaseConfig = {
+const config = {
   apiKey: "AIzaSyB0GjdGIR5hnRF2aSliAOCKjmegsIyFy6I",
   authDomain: "ninja-smoothies-123.firebaseapp.com",
   databaseURL: "https://ninja-smoothies-123.firebaseio.com",
@@ -11,6 +11,7 @@ const firebaseConfig = {
   appId: "1:42975990470:web:404fb36fe392d7da"
 }
 
-const firebaseApp = firebase.initializeApp(config)
+firebase.initializeApp(config);
+const db = firebase.firestore();
 
-export default firebaseApp.firestore()
+export default db;

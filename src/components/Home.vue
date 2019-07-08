@@ -15,24 +15,44 @@
 </template>
 
 <script>
+import firebase from 'firebase/app'
+import db from '@/firebase/init'
+
 export default {
   name: 'Home',
   data () {
     return {
       smoothies: [
-        { title: 'Ninja Brew', slug: 'ninja-brew', ingredients: ['banana', 'rasberry', 'milk'], id: '1' },
-        { title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'lemon', 'juice'], id: '2' },
-        { title: 'Nickys Nightmare', slug: 'nickys-nightmare', ingredients: ['coffee', 'peanutbutter', 'milk'], id: '3' }
+        // { title: 'Ninja Brew', slug: 'ninja-brew', ingredients: ['banana', 'rasberry', 'milk'], id: '1' },
+        // { title: 'Morning Mood', slug: 'morning-mood', ingredients: ['mango', 'lime', 'lemon', 'juice'], id: '2' },
+        // { title: 'Nickys Nightmare', slug: 'nickys-nightmare', ingredients: ['coffee', 'peanut butter', 'milk'], id: '3' }
       ]
     }
   },
   methods: {
     deleteSmoothie (id) {
-      this.smoothies = this.smoothies.filter(smoothie => {
-        // return only the smoothies to the array which do not match the smoothie to delete
-        return smoothie.id != id
-      })
+      // delete doc from firestore
+      db.collection('smoothies').doc(id).delete()
+        .then(() => {
+          // delete from frontend
+          this.smoothies = this.smoothies.filter(smoothie => {
+            // return only the smoothies to the array which do not match the smoothie to delete
+            return smoothie.id != id
+          })
+        })
     }
+  },
+  created () {
+    // fetch the data from firestore
+    db.collection('smoothies').get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          // console.log(doc.data(), doc.id)
+          let smoothie = doc.data()
+          smoothie.id = doc.id
+          this.smoothies.push(smoothie)
+        })
+      })
   }
 }
 </script>
