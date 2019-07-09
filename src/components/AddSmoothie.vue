@@ -9,7 +9,7 @@
       <div class="field" v-for="(ing, index) in ingredients" :key="index">
         <label for="ingredient">Ingredient</label>
         <input type="text" name="ingredient" v-model="ingredients[index]">
-        <i class="material-icons red-text delete" @click="deleteIng(ing)">delete</i>
+        <i class="material-icons red-text delete" @click="deleteIng(ing)">clear</i>
       </div>
       <div class="field add-ingredient">
         <label for="add-ingredient">Add an ingredient (press TAB to add another)</label>
