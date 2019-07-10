@@ -48,7 +48,6 @@ export default {
           remove: /[$*_+~.()'"!\-:@]/g,
           lower: true
         })
-        // console.log(this.title, this.slug, this.ingredients)
         // Save new smoothie to firestore
         db.collection('smoothies').add({
           title: this.title,
